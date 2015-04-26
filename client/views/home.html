@@ -12,7 +12,7 @@
   <div ng-if="!isAuthenticated()">
     <div class="jumbotron">
       <h2><i class="ion-images"></i> Instagram</h2>
-      <p>This is a basic Instagram clone powered by <strong>Satellizer</strong>. 
+      <p>This is a basic Instagram clone powered by <strong>Satellizer</strong> and implemented by Aptus Technica. 
         To continue, please log in with your Instagram account or create a new email account.</p>
       <p>
         <a href="#/login" class="btn btn-lg btn-success"><i class="ion-log-in"></i> Log In</a>
@@ -21,7 +21,7 @@
     </div>
   </div>
   
-  <div ng-if="isAuthenticated() && !currentUser.username" class="center-form-panel">
+  <div ng-if="isAuthenticated() && !currentUser.username" class="center-form panel">
     <div class="panel-body">
       <h5 class="text-center"><i class="ion-link"></i> Link Account</h5>
       <p>To complete registration process you must link your Instagram account.</p>
