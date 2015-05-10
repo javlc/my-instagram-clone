@@ -4,3 +4,6 @@
 vendor/
 /bower_components/
 server/node_modules/
+/server/config.js.bkup
+/server/npm-debug.log
+/server/server.js.bkup
