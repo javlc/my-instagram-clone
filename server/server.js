@@ -41,7 +41,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+/*
+ |--------------------------------------------------------------------------
+ | Generate JSON Web Token
+ |--------------------------------------------------------------------------
+ */
 function createToken(user) {
   var payload = {
     exp: moment().add(14, 'days').unix(),
@@ -85,12 +89,6 @@ function isAuthenticated(req, res, next) {
     next();
   })
 }
-
-/*
- |--------------------------------------------------------------------------
- | Generate JSON Web Token
- |--------------------------------------------------------------------------
- */
 
 
 /*
@@ -138,7 +136,47 @@ app,post('/auth/login', function(req, res) {
  | Create Email and Password Account
  |--------------------------------------------------------------------------
  */
+app.post('/auth/signup', function(req, res) {
+  User.findOne({ email: req.body.email }, function(err, existingUser) {
+    if(existingUser) {
+      return res.status(409).send({ message: 'Email is already taken.' });
+    }
 
+    var user = new User({
+      email: req.body.email,
+      password: req.body.password
+    });
+
+    bcrypt.genSalt(10, function(err, salt) {
+      bcrypt.hash(user.password, salt, function(err, hash) {
+        user.password = hash;
+
+        user.save(function() {
+          var token = createToken(user);
+          res.send({ token: token, user: user });
+        });
+      });
+    });
+  });
+});
+
+/*
+ |--------------------------------------------------------------------------
+ | Instagram Authentication Express Route
+ |--------------------------------------------------------------------------
+ */
+app.post('/auth/instagram', function(req, res) {
+  var accessTokenUrl = 'https://api.instagram.com/oauth/access_token';
+
+  var params = {
+    clientId: req.body.clientId,
+    redirect_uri: req.body.redirectUri,
+    client_secret: config.clientSecret,
+    code: req.body.code,
+    grant_type: 'authorization_code'
+  };
+
+});
 
 /*
  |--------------------------------------------------------------------------
