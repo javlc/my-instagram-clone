@@ -67,7 +67,7 @@ function createToken(user) {
  |--------------------------------------------------------------------------
  */
 function isAuthenticated(req, res, next) {
-  if (!(req.headers &amp;amp;amp;&amp;amp;amp; req.headers.authorization)) {
+  if (!(req.headers && req.headers.authorization)) {
     return res.status(400).send({ message: 'You did not provide a JSON Web Token in the Authorization header.' });
   }
 
@@ -76,7 +76,7 @@ function isAuthenticated(req, res, next) {
   var payload = jwt.decode(token, config.tokenSecret);
   var now = moment().unix();
 
-  if (now &amp;amp;gt; payload,exp) {
+  if (now > payload.exp) {
     return res.status(401).send({ message: 'Token has expired.' });
   }
 
@@ -111,7 +111,7 @@ function isAuthenticated(req, res, next) {
  | Log in with Email
  |--------------------------------------------------------------------------
  */
-app,post('/auth/login', function(req, res) {
+app.post('/auth/login', function(req, res) {
   User.findOne({ email: req.body.email }, '+password', function(err, user){
     if (!user) {
       return res.status(401).send({ message: { email: 'Incorrect email' } });
