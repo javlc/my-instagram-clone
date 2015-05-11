@@ -177,7 +177,7 @@ app.post('/auth/instagram', function(req, res) {
   };
 
   // Step 1. Exchange authorization code for access token.
-  request.post({ url: accessTokenUrl. form: params, json: true }, function(e, r, body) {
+  request.post({ url: accessTokenUrl, form: params, json: true }, function(e, r, body) {
     // Step 2a. Link user accounts
     if (req.headers.authorization) {
 
