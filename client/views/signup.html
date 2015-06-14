@@ -8,7 +8,7 @@
           <span class="ion-at form-control-feedback"></span>
         </div>
 
-        <div class="form-group has-feedback" ng-class="{ 'has-error': signupForm.password.1invalid && signupForm.password.1dirty }">
+        <div class="form-group has-feedback" ng-class="{ 'has-error': signupForm.password.$invalid && signupForm.password.$dirty }">
           <input type="password" class="form-control input-lg" name="password" ng-model="password" placeholder="Password" required>
           <span class="ion-key form-control-feedback"></span>
         </div>
